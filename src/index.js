@@ -15,7 +15,12 @@ const containerElement = createElement("div", bodyElement, "container");
 
 export const renderHeader = () => {
   const headerElement = createElement("header", containerElement);
-  headerElement.innerHTML = "Add Project List / Add Project";
+  const createArea = createElement("button", headerElement);
+  createArea.type = "button";
+  createArea.innerHTML = "Create Area";
+  const createProject = createElement("button", headerElement);
+  createProject.type = "button";
+  createProject.innerHTML = "Create Project";
 };
 
 export const renderSidebar = () => {
