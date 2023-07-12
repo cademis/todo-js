@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { add, format } from "date-fns";
 import "./style.css";
 
 // const result = format(new Date(), 'yyyyddMMHHmm')
@@ -15,18 +15,22 @@ const containerElement = createElement("div", bodyElement, "container");
 
 export const renderHeader = () => {
   const headerElement = createElement("header", containerElement);
-  const createArea = createElement("button", headerElement);
-  createArea.type = "button";
-  createArea.innerHTML = "Add Area";
-  const createProject = createElement("button", headerElement);
-  createProject.type = "button";
-  createProject.innerHTML = "Add Project";
+  const taskView = createElement("button", headerElement);
+  taskView.type = "button";
+  taskView.innerHTML = "Task View";
+  const projectView = createElement("button", headerElement);
+  projectView.type = "button";
+  projectView.innerHTML = "Project View";
 };
 
 export const renderSidebar = () => {
   const sidebarElement = createElement("div", containerElement, "sidebar");
+
   const input = createElement("input", sidebarElement, "filter-area");
   input.placeholder = "Filter Area";
+  const addArea = createElement("button", sidebarElement);
+  addArea.type = "button";
+  addArea.innerHTML = "Add Area";
   const div = createElement("div", sidebarElement, "checkboxes");
   const ul = createElement("ul", div);
   let areas = [
@@ -36,10 +40,14 @@ export const renderSidebar = () => {
   ];
   areas.forEach((area) => {
     const li = createElement("li", ul);
-    const input = createElement("input", li);
+    const areaDescription = `${area.areaId}-${area.description
+      .split(" ")
+      .join("-")}`;
+    const input = createElement("input", li, areaDescription.toLowerCase());
     input.type = "checkbox";
     const label = createElement("label", li);
     label.textContent = area.description;
+    label.htmlFor = areaDescription.toLowerCase();
   });
 };
 
@@ -47,7 +55,9 @@ export const renderMain = () => {
   const mainElement = createElement("main", containerElement);
   const input = createElement("input", mainElement, "filter-project");
   input.placeholder = "Filter Project";
-
+  const addProject = createElement("button", mainElement);
+  addProject.type = "button";
+  addProject.innerHTML = "Add Project";
   const table = createElement("table", mainElement);
   const thead = createElement("thead", table);
   const tr = createElement("tr", thead);
