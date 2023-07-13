@@ -1,4 +1,5 @@
-import { getAreas, createElement } from "./render";
+import { createElement } from "./render";
+import { getAreas } from "./lsManager";
 
 export const eventListeners = () => {
   const input = document.getElementById("filter-area");
@@ -10,22 +11,24 @@ export const eventListeners = () => {
     // Clear the list
     ul.innerHTML = "";
 
-    // Filter the areas array and rebuild the list
-
     let areas = getAreas();
 
-    areas
-      .filter((area) => area.description.toLowerCase().includes(searchTerm))
-      .forEach((area) => {
-        const li = createElement("li", ul);
-        const areaDescription = `${area.areaId}-${area.description
-          .split(" ")
-          .join("-")}`;
-        const input = createElement("input", li, areaDescription.toLowerCase());
-        input.type = "checkbox";
-        const label = createElement("label", li);
-        label.textContent = `${area.description} (${area.areaId})`;
-        label.htmlFor = areaDescription.toLowerCase();
-      });
+    filterList(areas, searchTerm, ul);
   });
 };
+
+function filterList(items, search, parentElement) {
+  items
+    .filter((item) => item.description.toLowerCase().includes(search))
+    .forEach((item) => {
+      const li = createElement("li", parentElement);
+      const areaDescription = `${item.areaId}-${item.description
+        .split(" ")
+        .join("-")}`;
+      const input = createElement("input", li, areaDescription.toLowerCase());
+      input.type = "checkbox";
+      const label = createElement("label", li);
+      label.textContent = `${item.description} (${item.areaId})`;
+      label.htmlFor = areaDescription.toLowerCase();
+    });
+}
