@@ -11,29 +11,41 @@ const getSampleAreas = () => {
   return sampleAreas;
 };
 
-const getMoreSampleAreas = () => {
+const setLSSampleAreas = () => {
   let moreSampleAreas = [
     { areaId: "H8", description: "Fitness and Health" },
     { areaId: "H8", description: "House Chores" },
     { areaId: "F4", description: "Family Stuff" },
+    { areaId: "F5", description: "Fluffy stuff" },
+    { areaId: "F6", description: "Friends" },
+    { areaId: "F7", description: "Figma" },
+    { areaId: "F8", description: "Hello WOrld" },
   ];
+
+  localStorage.setItem(
+    LOCAL_STORAGE_AREAS_KEY,
+    JSON.stringify(moreSampleAreas)
+  );
+
   return moreSampleAreas;
 };
 
 export const getAreas = () => {
   let sampleAreas = getSampleAreas();
-  let moreSampleAreas = getMoreSampleAreas();
+  setLSSampleAreas();
 
-  let areas = [...sampleAreas, ...moreSampleAreas];
+  let lsAreas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY));
+
+  let allAreas = [...sampleAreas, ...lsAreas];
   // const areas = [
   //   { areaId: "H6", description: "Health and Fitness" },
   //   { areaId: "P2", description: "Politics" },
   //   { areaId: "H9", description: "Holiday Planning" },
   // ];
 
-  areas.sort((a, b) => a.areaId.localeCompare(b.areaId));
+  allAreas.sort((a, b) => a.areaId.localeCompare(b.areaId));
 
-  return areas;
+  return allAreas;
 };
 
 // export const save = () => {
