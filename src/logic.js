@@ -1,34 +1,58 @@
-import { createElement } from "./render";
-import { getAreas } from "./lsManager";
+import { createElement, renderSidebar } from "./render";
+import { getAreas, addArea } from "./lsManager";
 
 export const eventListeners = () => {
-  const input = document.getElementById("filter-area");
-  const checkboxes = document.getElementById("checkboxes");
-  const ul = checkboxes.querySelector("ul");
-  input.addEventListener("input", (event) => {
-    const searchTerm = event.target.value.toLowerCase();
+  const areaInput = document.getElementById("filter-area");
+  areaInput.addEventListener("input", handleAreaInput);
 
-    // Clear the list
-    ul.innerHTML = "";
+  const addAreaButton = document.getElementById("add-area");
+  addAreaButton.addEventListener("click", handleAddArea);
 
-    let areas = getAreas();
-
-    filterList(areas, searchTerm, ul);
-  });
+  const projectInput = document.getElementById("filter-project");
+  projectInput.addEventListener("input", handleProjectInput);
 };
 
-function filterList(items, search, parentElement) {
-  items
-    .filter((item) => item.description.toLowerCase().includes(search))
-    .forEach((item) => {
-      const li = createElement("li", parentElement);
-      const areaDescription = `${item.areaId}-${item.description
+function handleAreaInput() {
+  const checkboxes = document.getElementById("checkboxes");
+  const ul = checkboxes.querySelector("ul");
+  const areaInput = document.getElementById("filter-area");
+  const searchTerm = areaInput.value;
+  ul.innerHTML = "";
+  filterAreaList();
+}
+
+function handleProjectInput(event) {
+  console.log("todo: handleProjectInput");
+  console.log(event);
+}
+
+function handleAddArea() {
+  console.log("todo - add contents of input to area list");
+  const areaInput = document.getElementById("filter-area").value;
+  console.log(areaInput);
+  addArea(areaInput);
+  filterAreaList();
+}
+
+export function filterAreaList() {
+  const checkboxes = document.getElementById("checkboxes");
+  const ul = checkboxes.querySelector("ul");
+  const areaInput = document.getElementById("filter-area");
+  const searchTerm = areaInput.value;
+  const areas = getAreas();
+
+  areas
+    .filter((area) => area.description.toLowerCase().includes(searchTerm))
+    .forEach((area) => {
+      const li = createElement("li", ul);
+      const areaDescription = `${area.areaId}-${area.description
         .split(" ")
         .join("-")}`;
-      const input = createElement("input", li, areaDescription.toLowerCase());
-      input.type = "checkbox";
+      let lowerCaseAreaDescription = areaDescription.toLowerCase();
+      const inputElement = createElement("input", li, lowerCaseAreaDescription);
+      inputElement.type = "checkbox";
       const label = createElement("label", li);
-      label.textContent = `${item.description} (${item.areaId})`;
-      label.htmlFor = areaDescription.toLowerCase();
+      label.textContent = `${area.description} (${area.areaId})`;
+      label.htmlFor = lowerCaseAreaDescription;
     });
 }

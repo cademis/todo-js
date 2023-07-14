@@ -28,7 +28,7 @@ export const renderSidebar = () => {
 
   const input = createElement("input", sidebarElement, "filter-area");
   input.placeholder = "Filter Area";
-  const addArea = createElement("button", sidebarElement);
+  const addArea = createElement("button", sidebarElement, "add-area");
   addArea.type = "button";
   addArea.innerHTML = "Add Area";
   const div = createElement("div", sidebarElement, "checkboxes");

@@ -1,56 +1,31 @@
 const LOCAL_STORAGE_AREAS_KEY = "areas.lists";
 const LOCAL_STORAGE_PROJECTS_KEY = "projects.lists";
-let areas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)) || [];
+let areas;
 
-const getSampleAreas = () => {
-  let sampleAreas = [
-    { areaId: "H6", description: "Health and Fitness" },
-    { areaId: "P2", description: "Politics" },
-    { areaId: "H9", description: "Holiday Planning" },
-  ];
-  return sampleAreas;
-};
-
-const setLSSampleAreas = () => {
-  let moreSampleAreas = [
-    { areaId: "H8", description: "Fitness and Health" },
-    { areaId: "H8", description: "House Chores" },
-    { areaId: "F4", description: "Family Stuff" },
-    { areaId: "F5", description: "Fluffy stuff" },
-    { areaId: "F6", description: "Friends" },
-    { areaId: "F7", description: "Figma" },
-    { areaId: "F8", description: "Hello WOrld" },
-  ];
-
-  localStorage.setItem(
-    LOCAL_STORAGE_AREAS_KEY,
-    JSON.stringify(moreSampleAreas)
-  );
-
-  return moreSampleAreas;
-};
+function areaFactory(areaId, description) {
+  return {
+    areaId,
+    description,
+  };
+}
 
 export const getAreas = () => {
-  let sampleAreas = getSampleAreas();
-  setLSSampleAreas();
-
-  let lsAreas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY));
-
-  let allAreas = [...sampleAreas, ...lsAreas];
-  // const areas = [
-  //   { areaId: "H6", description: "Health and Fitness" },
-  //   { areaId: "P2", description: "Politics" },
-  //   { areaId: "H9", description: "Holiday Planning" },
-  // ];
-
-  allAreas.sort((a, b) => a.areaId.localeCompare(b.areaId));
-
-  return allAreas;
+  return (areas =
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)) || []);
 };
 
-// export const save = () => {
-//   localStorage.setItem(LOCAL_STORAGE_AREA_KEY, JSON.stringify(getAreas()));
-// };
+export function addArea(description) {
+  const retrievedAreas = JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)
+  );
+  const newArea = areaFactory("P5", description);
+
+  const updatedAreas = [...retrievedAreas, newArea];
+
+  // console.log(`${JSON.stringify(updatedAreas)} created via addArea() function`);
+  localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(updatedAreas));
+  console.log(JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)));
+}
 
 export const getProjects = () => {
   const projects = [

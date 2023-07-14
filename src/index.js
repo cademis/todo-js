@@ -7,8 +7,11 @@ import {
   renderFooter,
 } from "./render";
 import { eventListeners } from "./logic";
+import { getAreas } from "./lsManager";
 
 // const result = format(new Date(), 'yyyyddMMHHmm')
+
+getAreas();
 
 renderHeader();
 
