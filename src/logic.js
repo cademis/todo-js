@@ -1,5 +1,6 @@
 import { createElement, renderSidebar } from "./render";
 import { getAreas, addArea } from "./lsManager";
+import { events as pubsub } from "./pubsub";
 
 export const eventListeners = () => {
   const areaInput = document.getElementById("filter-area");
@@ -47,6 +48,9 @@ function handleAddArea() {
 function handleAreaChecked(event) {
   if (event.target.checked) {
     console.log("Checkbox is checked");
+    // send message to lsManager that an area has been checked and it should change the status of pinned to true
+    // use pubsub for this
+    pubsub.emit("CheckboxChanged", "Hello World. Checkbox is Checked.");
   } else {
     console.log("Checkbox is unchecked");
   }

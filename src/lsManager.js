@@ -1,3 +1,5 @@
+import { events as pubsub } from "./pubsub";
+
 const LOCAL_STORAGE_AREAS_KEY = "areas.lists";
 const LOCAL_STORAGE_PROJECTS_KEY = "projects.lists";
 let areas;
@@ -115,6 +117,14 @@ export const getProjects = () => {
 
   return projects;
 };
+
+const pubsubListener = (() => {
+  pubsub.on("CheckboxChanged", helloWorld);
+})();
+
+function helloWorld(emittedItem) {
+  console.log(emittedItem);
+}
 
 // Local storage clean up function
 
