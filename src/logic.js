@@ -10,6 +10,16 @@ export const eventListeners = () => {
 
   const projectInput = document.getElementById("filter-project");
   projectInput.addEventListener("input", handleProjectInput);
+
+  const sidebarElement = document.getElementById("sidebar");
+  // console.log(sidebarElement);
+  const checkboxElement = sidebarElement.querySelectorAll(
+    'input[type="checkbox"]'
+  );
+  // console.log(checkboxElement);
+  checkboxElement.forEach((element) => {
+    element.addEventListener("change", handleAreaChecked);
+  });
 };
 
 function handleAreaInput() {
@@ -34,6 +44,15 @@ function handleAddArea() {
   filterAreaList();
 }
 
+function handleAreaChecked(event) {
+  if (event.target.checked) {
+    console.log("Checkbox is checked");
+  } else {
+    console.log("Checkbox is unchecked");
+  }
+  // console.log(event.target.id);
+}
+
 export function filterAreaList() {
   const checkboxes = document.getElementById("checkboxes");
   const ul = checkboxes.querySelector("ul");
@@ -52,7 +71,7 @@ export function filterAreaList() {
       const inputElement = createElement("input", li, lowerCaseAreaDescription);
       inputElement.type = "checkbox";
       const label = createElement("label", li);
-      label.textContent = `${area.description} (${area.areaId})`;
+      label.textContent = `${area.areaId.toLowerCase()}/${area.description.toLowerCase()}`;
       label.htmlFor = lowerCaseAreaDescription;
     });
 }

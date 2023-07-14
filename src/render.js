@@ -28,6 +28,7 @@ export const renderSidebar = () => {
 
   const input = createElement("input", sidebarElement, "filter-area");
   input.placeholder = "Filter Area";
+  input.pattern = "^[A-Za-z]+/[A-Za-z\\s]+$";
   const addArea = createElement("button", sidebarElement, "add-area");
   addArea.type = "button";
   addArea.innerHTML = "Add Area";
@@ -43,7 +44,7 @@ export const renderSidebar = () => {
     const input = createElement("input", li, areaDescription.toLowerCase());
     input.type = "checkbox";
     const label = createElement("label", li);
-    label.textContent = `${area.description} (${area.areaId})`;
+    label.textContent = `${area.areaId.toLowerCase()}/${area.slug.toLowerCase()}`;
     label.htmlFor = areaDescription.toLowerCase();
   });
 };
@@ -73,7 +74,7 @@ export const renderMain = () => {
     projectId.innerHTML = project.projectId;
     const description = createElement("td", tr);
     // description.innerHTML = project.description;
-    description.innerHTML = `${project.description} (${project.projectId})`;
+    description.innerHTML = `${project.projectId.toLowerCase()}/${project.description.toLowerCase()}`;
     const created = createElement("td", tr);
     created.innerHTML = project.created;
     tr.appendChild(projectId);

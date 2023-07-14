@@ -3,9 +3,34 @@ const LOCAL_STORAGE_PROJECTS_KEY = "projects.lists";
 let areas;
 
 function areaFactory(areaId, description) {
+  const allAreas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY));
+
+  let slug = `${description.split(" ").join("-")}`.toLowerCase();
+
+  let uniqueSlug = `${areaId}-${description
+    .split(" ")
+    .join("-")}`.toLowerCase();
+
+  // check if the uniqueSlug already exists in allAreas
+  let existing = allAreas.find((area) => area.uniqueSlug === uniqueSlug);
+
+  // if uniqueSlugalready exists, add a postfix to make it unique
+  if (existing) {
+    let postfix = 1;
+    while (
+      allAreas.find((area) => area.uniqueSlug === uniqueSlug + "-" + postfix)
+    ) {
+      postfix++;
+    }
+    uniqueSlug += "-" + postfix;
+  }
+
   return {
     areaId,
     description,
+    pinned: false,
+    slug,
+    uniqueSlug,
   };
 }
 
@@ -86,7 +111,18 @@ export const getProjects = () => {
     },
   ];
 
-  projects.sort((a, b) => a.projectId.localeCompare(b.projectId));
+  projects.sort((a, b) => (a.projectId > b.projectId ? 1 : -1));
 
   return projects;
 };
+
+// Local storage clean up function
+
+(function () {
+  let allAreas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY));
+  allAreas.forEach((element) => {
+    areaFactory(element.areaId, element.description);
+  });
+  console.log(allAreas);
+  // localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(allAreas)); // WARNING - only uncomment if allAreas returns desired results
+})();
