@@ -119,12 +119,31 @@ export const getProjects = () => {
 };
 
 const pubsubListener = (() => {
-  pubsub.on("CheckboxChanged", helloWorld);
+  pubsub.on("CheckboxChanged", handleCheckboxChange);
 })();
 
-function helloWorld(emittedItem) {
-  console.log(emittedItem);
-}
+// function handleCheckboxChange(obj) {
+//   console.log(obj);
+//   if (obj.checked) {
+//     enablePin(obj.id);
+//   } else {
+//     disablePin(obj.id)
+//   }
+// }
+
+// const enablePin = (id) => {
+//   let allAreas = getAreas();
+//   allAreas.forEach((item) => {
+//     if (item.uniqueSlug === id) console.log("match");
+//   });
+// };
+
+// const disablePin = (id) {
+//   let allAreas = getAreas();
+//   allAreas.forEach((item) => {
+//     if (item.uniqueSlug === id) console.log("match");
+//   });
+// }
 
 // Local storage clean up function
 

@@ -47,12 +47,13 @@ function handleAddArea() {
 
 function handleAreaChecked(event) {
   if (event.target.checked) {
-    console.log("Checkbox is checked");
     // send message to lsManager that an area has been checked and it should change the status of pinned to true
     // use pubsub for this
-    pubsub.emit("CheckboxChanged", "Hello World. Checkbox is Checked.");
+    // event.target.id;
+    // console.log(typeof output);
+    pubsub.emit("CheckboxChanged", { id: event.target.id, checked: true });
   } else {
-    console.log("Checkbox is unchecked");
+    pubsub.emit("CheckboxChanged", { id: event.target.id, checked: false });
   }
   // console.log(event.target.id);
 }
