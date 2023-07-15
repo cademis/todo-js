@@ -4,16 +4,18 @@ const LOCAL_STORAGE_AREAS_KEY = "areas.lists";
 const LOCAL_STORAGE_PROJECTS_KEY = "projects.lists";
 let areas;
 
+// areaFactory
 function areaFactory(areaId, description) {
   const allAreas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY));
 
   let slug = `${description.split(" ").join("-")}`.toLowerCase();
 
+  // set default value of uniqueSlug
   let uniqueSlug = `${areaId}-${description
     .split(" ")
     .join("-")}`.toLowerCase();
 
-  // check if the uniqueSlug already exists in allAreas
+  // check if the new uniqueSlug already exists in allAreas
   let existing = allAreas.find((area) => area.uniqueSlug === uniqueSlug);
 
   // if uniqueSlugalready exists, add a postfix to make it unique
@@ -118,40 +120,43 @@ export const getProjects = () => {
   return projects;
 };
 
-const pubsubListener = (() => {
-  pubsub.on("CheckboxChanged", handleCheckboxChange);
-})();
+const handleCheckboxChange = (event) => {
+  console.log(`checkbox has changed status: ${event}`);
+  let allAreas = getAreas();
+  console.log(allAreas);
 
-// function handleCheckboxChange(obj) {
-//   console.log(obj);
-//   if (obj.checked) {
-//     enablePin(obj.id);
-//   } else {
-//     disablePin(obj.id)
-//   }
-// }
+  let modifiedAreas = allAreas.map((area) => {
+    if (area.uniqueSlug === event.id) {
+      return {
+        ...area,
+        pinned: true,
+      };
+    } else {
+      return area;
+    }
+  });
 
-// const enablePin = (id) => {
-//   let allAreas = getAreas();
-//   allAreas.forEach((item) => {
-//     if (item.uniqueSlug === id) console.log("match");
-//   });
-// };
+  let isMatched = modifiedAreas.some((area) => area.uniqueSlug === event.id);
+  if (isMatched) {
+    console.log("found a match!");
+  } else {
+    console.log(`error no match`);
+  }
 
-// const disablePin = (id) {
-//   let allAreas = getAreas();
-//   allAreas.forEach((item) => {
-//     if (item.uniqueSlug === id) console.log("match");
-//   });
-// }
+  console.log(modifiedAreas);
+  // localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(modifiedAreas));
+};
 
-// Local storage clean up function
+pubsub.on("CheckboxChanged", handleCheckboxChange);
+
+// Local storage clean up function. Use this after modifying the areaFactory function
+// WARNING - only uncomment last line if allAreas returns desired results
 
 (function () {
   let allAreas = JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY));
-  allAreas.forEach((element) => {
-    areaFactory(element.areaId, element.description);
+  allAreas = allAreas.map((element) => {
+    return areaFactory(element.areaId, element.description);
   });
   console.log(allAreas);
-  // localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(allAreas)); // WARNING - only uncomment if allAreas returns desired results
+  // localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(allAreas));
 })();
