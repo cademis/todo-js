@@ -144,7 +144,7 @@ const handleCheckboxChange = (event) => {
   }
 
   console.log(modifiedAreas);
-  // localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(modifiedAreas));
+  localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(modifiedAreas));
 };
 
 pubsub.on("CheckboxChanged", handleCheckboxChange);
