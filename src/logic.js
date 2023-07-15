@@ -58,47 +58,60 @@ function handleAreaChecked(event) {
 }
 
 export function filterAreaList() {
+  //TODO #6 make the filter strictly search for all alpha characters before the "/" e.g. searching for f/ will not also return area with fg/ e.g. fg1/
+
   const checkboxes = document.getElementById("checkboxes");
   const ul = checkboxes.querySelector("ul");
   const areaInput = document.getElementById("filter-area");
   let searchTerm = areaInput.value;
   const areas = getAreas();
 
+  // Remove the "No matches found" message if it exists from previous searches
+  const noMatchMessage = document.getElementById("no-match-message");
+  if (noMatchMessage) {
+    noMatchMessage.remove();
+  }
+
   // Split the search term into prefix and slug.
   let [searchPrefix, searchSlug] = searchTerm.split("/");
 
-  // If the prefix ends with "*", remove the "*" and only filter by the starting characters.
-  let isWildcardSearch = false;
-  if (searchPrefix.endsWith("*")) {
-    searchPrefix = searchPrefix.slice(0, -1);
-    isWildcardSearch = true;
+  // If searchPrefix is just a letter (without any digit), it's considered as a wildcard search
+  let isWildcardSearch = !/\d/.test(searchPrefix); // True if there's no digit in searchPrefix
+
+  let filteredAreas = areas.filter((area) => {
+    let areaId = area.areaId.toLowerCase();
+    let description = area.description.toLowerCase().split(" ").join("-");
+
+    // If it's a wildcard search, check if areaId starts with searchPrefix and description includes searchSlug
+    // Else, check if areaId and description exactly match searchPrefix and searchSlug respectively.
+    if (isWildcardSearch) {
+      return (
+        areaId.startsWith(searchPrefix) && description.includes(searchSlug)
+      );
+    } else {
+      return areaId === searchPrefix && description === searchSlug;
+    }
+  });
+
+  // If no matches were found, show a message
+  if (filteredAreas.length === 0) {
+    const messageElement = createElement("p", checkboxes);
+    messageElement.id = "no-match-message";
+    messageElement.innerHTML = "No matches found"; // Assign an id for future removal
+    return; // End the function here as there's nothing else to do
   }
 
-  areas
-    .filter((area) => {
-      let areaId = area.areaId.toLowerCase();
-      let description = area.description.toLowerCase().split(" ").join("-");
-
-      // If it's a wildcard search, check if areaId starts with searchPrefix and description includes searchSlug
-      // Else, check if areaId and description exactly match searchPrefix and searchSlug respectively.
-      if (isWildcardSearch) {
-        return (
-          areaId.startsWith(searchPrefix) && description.includes(searchSlug)
-        );
-      } else {
-        return areaId === searchPrefix && description === searchSlug;
-      }
-    })
-    .forEach((area) => {
-      const li = createElement("li", ul);
-      const areaDescription = `${area.areaId}-${area.description
-        .split(" ")
-        .join("-")}`;
-      let lowerCaseAreaDescription = areaDescription.toLowerCase();
-      const inputElement = createElement("input", li, lowerCaseAreaDescription);
-      inputElement.type = "checkbox";
-      const label = createElement("label", li);
-      label.textContent = `${area.areaId.toLowerCase()}/${area.description.toLowerCase()}`;
-      label.htmlFor = lowerCaseAreaDescription;
-    });
+  // Populate the filtered areas
+  filteredAreas.forEach((area) => {
+    const li = createElement("li", ul);
+    const areaDescription = `${area.areaId}-${area.description
+      .split(" ")
+      .join("-")}`;
+    let lowerCaseAreaDescription = areaDescription.toLowerCase();
+    const inputElement = createElement("input", li, lowerCaseAreaDescription);
+    inputElement.type = "checkbox";
+    const label = createElement("label", li);
+    label.textContent = `${area.areaId.toLowerCase()}/${area.slug}`;
+    label.htmlFor = lowerCaseAreaDescription;
+  });
 }

@@ -27,7 +27,7 @@ export const renderSidebar = () => {
   const sidebarElement = createElement("div", containerElement, "sidebar");
 
   const input = createElement("input", sidebarElement, "filter-area");
-  input.placeholder = "Filter Area";
+  input.placeholder = "type '/' to search all projects";
   input.pattern = "^[A-Za-z]+/[A-Za-z\\s]+$";
   const addArea = createElement("button", sidebarElement, "add-area");
   addArea.type = "button";
