@@ -27,7 +27,6 @@ function handleAreaInput() {
   const checkboxes = document.getElementById("checkboxes");
   const ul = checkboxes.querySelector("ul");
   const areaInput = document.getElementById("filter-area");
-  const searchTerm = areaInput.value;
   ul.innerHTML = "";
   filterAreaList();
 }
@@ -59,9 +58,11 @@ function handleAreaChecked(event) {
 }
 
 export function filterAreaList() {
+  //TODO #4 add the ability to filter by area code prefix when typing e.g "f/" searches for all areas with area code prefix
   const checkboxes = document.getElementById("checkboxes");
   const ul = checkboxes.querySelector("ul");
   const areaInput = document.getElementById("filter-area");
+
   const searchTerm = areaInput.value;
   const areas = getAreas();
 
