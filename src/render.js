@@ -44,6 +44,7 @@ export const renderSidebar = () => {
     //TODO #2 set the checkbox checked status based on the pinned status
     const input = createElement("input", li, areaDescription.toLowerCase());
     input.type = "checkbox";
+    input.checked = area.pinned;
     const label = createElement("label", li);
     label.textContent = `${area.areaId.toLowerCase()}/${area.slug.toLowerCase()}`;
     label.htmlFor = areaDescription.toLowerCase();
