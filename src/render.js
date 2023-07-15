@@ -41,7 +41,7 @@ export const renderSidebar = () => {
     const areaDescription = `${area.areaId}-${area.description
       .split(" ")
       .join("-")}`;
-    // set the checkbox checked status based on the lable #1
+    //TODO #2 set the checkbox checked status based on the pinned status
     const input = createElement("input", li, areaDescription.toLowerCase());
     input.type = "checkbox";
     const label = createElement("label", li);
