@@ -123,18 +123,9 @@ export const getProjects = () => {
 const handleCheckboxChange = (event) => {
   console.log(`checkbox has changed status: ${event}`);
   let allAreas = getAreas();
-  console.log(allAreas);
-
-  let modifiedAreas = allAreas.map((area) => {
-    if (area.uniqueSlug === event.id) {
-      return {
-        ...area,
-        pinned: true,
-      };
-    } else {
-      return area;
-    }
-  });
+  const modifiedAreas = allAreas.map((area) =>
+    area.uniqueSlug === event.id ? { ...area, pinned: event.checked } : area
+  );
 
   let isMatched = modifiedAreas.some((area) => area.uniqueSlug === event.id);
   if (isMatched) {
