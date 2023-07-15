@@ -58,16 +58,37 @@ function handleAreaChecked(event) {
 }
 
 export function filterAreaList() {
-  //TODO #4 add the ability to filter by area code prefix when typing e.g "f/" searches for all areas with area code prefix
   const checkboxes = document.getElementById("checkboxes");
   const ul = checkboxes.querySelector("ul");
   const areaInput = document.getElementById("filter-area");
-
-  const searchTerm = areaInput.value;
+  let searchTerm = areaInput.value;
   const areas = getAreas();
 
+  // Split the search term into prefix and slug.
+  let [searchPrefix, searchSlug] = searchTerm.split("/");
+
+  // If the prefix ends with "*", remove the "*" and only filter by the starting characters.
+  let isWildcardSearch = false;
+  if (searchPrefix.endsWith("*")) {
+    searchPrefix = searchPrefix.slice(0, -1);
+    isWildcardSearch = true;
+  }
+
   areas
-    .filter((area) => area.description.toLowerCase().includes(searchTerm))
+    .filter((area) => {
+      let areaId = area.areaId.toLowerCase();
+      let description = area.description.toLowerCase().split(" ").join("-");
+
+      // If it's a wildcard search, check if areaId starts with searchPrefix and description includes searchSlug
+      // Else, check if areaId and description exactly match searchPrefix and searchSlug respectively.
+      if (isWildcardSearch) {
+        return (
+          areaId.startsWith(searchPrefix) && description.includes(searchSlug)
+        );
+      } else {
+        return areaId === searchPrefix && description === searchSlug;
+      }
+    })
     .forEach((area) => {
       const li = createElement("li", ul);
       const areaDescription = `${area.areaId}-${area.description
