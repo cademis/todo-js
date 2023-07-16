@@ -44,14 +44,43 @@ export const getAreas = () => {
 };
 
 export function addArea(description) {
+  console.log(`description = ${description}`);
   const retrievedAreas = JSON.parse(
     localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)
   );
-  const newArea = areaFactory("P5", description);
+
+  let splitDescription = description.split("/");
+  let areaCodePrefix = splitDescription[0];
+  let slug = splitDescription[1];
+
+  const areaCodesWithSamePrefix = retrievedAreas
+    .map(({ areaId }) => {
+      const [retrievedAreaCodePrefix, retrievedAreaCodeSequentialNumber] =
+        areaId.split(/(\d+)/).filter(Boolean);
+      return {
+        retrievedAreaCodePrefix,
+        retrievedAreaCodeSequentialNumber: +retrievedAreaCodeSequentialNumber,
+      };
+    })
+    .filter(
+      ({ retrievedAreaCodePrefix }) =>
+        areaCodePrefix === retrievedAreaCodePrefix
+    );
+
+  let maxSequentialNumber = Math.max(
+    ...areaCodesWithSamePrefix.map(
+      ({ retrievedAreaCodeSequentialNumber }) =>
+        retrievedAreaCodeSequentialNumber
+    ),
+    0
+  );
+
+  let newAreaCodeSequentialNumber = maxSequentialNumber + 1;
+  let newAreaCode = `${areaCodePrefix}${newAreaCodeSequentialNumber}`;
+  let newArea = areaFactory(newAreaCode, slug);
 
   const updatedAreas = [...retrievedAreas, newArea];
 
-  // console.log(`${JSON.stringify(updatedAreas)} created via addArea() function`);
   localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(updatedAreas));
   console.log(JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)));
 }
