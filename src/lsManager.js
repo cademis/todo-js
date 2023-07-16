@@ -177,6 +177,6 @@ pubsub.on("CheckboxChanged", handleCheckboxChange);
   allAreas = allAreas.map((element) => {
     return areaFactory(element.areaId, element.description);
   });
-  console.log(allAreas);
+  // console.log(allAreas);
   // localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(allAreas));
 })();

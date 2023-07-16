@@ -14,6 +14,7 @@ export const eventListeners = () => {
 
   const sidebarElement = document.getElementById("sidebar");
   // console.log(sidebarElement);
+
   const checkboxElement = sidebarElement.querySelectorAll(
     'input[type="checkbox"]'
   );
@@ -37,7 +38,7 @@ function handleProjectInput(event) {
 }
 
 function handleAddArea() {
-  //TODO #7 add contents of the input to area list
+  //TODO #14 add the functionality to inputbox to add the new area when ruturn is checked
   console.log("todo - add contents of input to area list");
   const areaInput = document.getElementById("filter-area").value;
   console.log(areaInput);
