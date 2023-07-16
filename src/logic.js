@@ -18,7 +18,7 @@ export const eventListeners = () => {
   const checkboxElement = sidebarElement.querySelectorAll(
     'input[type="checkbox"]'
   );
-  // console.log(checkboxElement);
+  console.log(checkboxElement);
   checkboxElement.forEach((element) => {
     element.addEventListener("change", handleAreaChecked);
   });
@@ -51,9 +51,10 @@ function handleAreaChecked(event) {
     // send message to lsManager that an area has been checked and it should change the status of pinned to true
     // use pubsub for this
     // event.target.id;
-    // console.log(typeof output);
+    console.log(`checkbox ${event.target.id} checked`);
     pubsub.emit("CheckboxChanged", { id: event.target.id, checked: true });
   } else {
+    console.log(`checkbox ${event.target.id} unchecked`);
     pubsub.emit("CheckboxChanged", { id: event.target.id, checked: false });
   }
   // console.log(event.target.id);

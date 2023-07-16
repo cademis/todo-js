@@ -150,7 +150,9 @@ export const getProjects = () => {
 };
 
 const handleCheckboxChange = (event) => {
-  console.log(`checkbox has changed status: ${event}`);
+  console.log(
+    `checkbox has changed status: ${event.id} is now checked: ${event.checked}`
+  );
   let allAreas = getAreas();
   const modifiedAreas = allAreas.map((area) =>
     area.uniqueSlug === event.id ? { ...area, pinned: event.checked } : area
@@ -163,8 +165,9 @@ const handleCheckboxChange = (event) => {
     console.log(`error no match`);
   }
 
-  console.log(modifiedAreas);
+  // console.log(modifiedAreas);
   localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(modifiedAreas));
+  console.log(JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)));
 };
 
 pubsub.on("CheckboxChanged", handleCheckboxChange);
