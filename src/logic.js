@@ -85,13 +85,16 @@ export function filterAreaList() {
   let filteredAreas = areas.filter((area) => {
     let areaId = area.areaId.toLowerCase();
     let slug = area.slug;
+    let pinned = area.pinned;
 
     // If it's a wildcard search, check if areaId starts with searchPrefix and description includes searchSlug
     // Else, check if areaId and description exactly match searchPrefix and searchSlug respectively.
     if (isWildcardSearch) {
-      return areaId.startsWith(searchPrefix) && slug.includes(searchSlug);
+      return (
+        (areaId.startsWith(searchPrefix) && slug.includes(searchSlug)) || pinned
+      );
     } else {
-      return areaId === searchPrefix && slug === searchSlug;
+      return (areaId === searchPrefix && slug === searchSlug) || pinned;
     }
   });
 
