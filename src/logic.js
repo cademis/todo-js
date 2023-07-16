@@ -111,6 +111,7 @@ export function filterAreaList() {
     let lowerCaseAreaDescription = areaDescription.toLowerCase();
     const inputElement = createElement("input", li, lowerCaseAreaDescription);
     inputElement.type = "checkbox";
+    inputElement.checked = area.pinned;
     const label = createElement("label", li);
     label.textContent = `${area.areaId.toLowerCase()}/${area.slug}`;
     label.htmlFor = lowerCaseAreaDescription;
