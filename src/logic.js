@@ -5,6 +5,7 @@ import { events as pubsub } from "./pubsub";
 export const eventListeners = () => {
   const areaInput = document.getElementById("filter-area");
   areaInput.addEventListener("input", handleAreaInput);
+  areaInput.addEventListener("click", handleAreaInput);
 
   const addAreaButton = document.getElementById("add-area");
   addAreaButton.addEventListener("click", handleAddArea);
