@@ -47,11 +47,45 @@ export function addArea(description) {
   const retrievedAreas = JSON.parse(
     localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)
   );
-  const newArea = areaFactory("P5", description);
+
+  // split the description by "/"
+  description.split("/");
+  let areaCodePrefix = description[0];
+  let slug = description[1];
+  let areaCodeSequentialNumber = 1;
+
+  // find all areas with matching prefix in retrievedAreas
+  const splitAreaCodes = retrievedAreas.map(({ areaId }) => {
+    const [areaCodePrefix, areaCodeSequentialNumber] = areaId
+      .split(/(\d+)/)
+      .filter(Boolean);
+    return { areaCodePrefix, areaCodeSequentialNumber };
+  });
+
+  let newArea;
+
+  for (const area of splitAreaCodes) {
+    if (
+      areaCodePrefix === area.areaCodePrefix &&
+      slug === areaCodeSequentialNumber
+    ) {
+      console.log(
+        `check with areaCodeSequentialNumber: ${areaCodeSequentialNumber}`
+      );
+      console.log("match found - check the next one");
+      areaCodeSequentialNumber++;
+    } else {
+      console.log(
+        "no match! - append the sequential number, add to localmemory, and refresh the page"
+      );
+      let newAreaCode = `${areaCodePrefix}${areaCodeSequentialNumber}`;
+      newArea = areaFactory(newAreaCode, slug);
+      break; // stop the loop
+    }
+  }
 
   const updatedAreas = [...retrievedAreas, newArea];
 
-  // console.log(`${JSON.stringify(updatedAreas)} created via addArea() function`);
   localStorage.setItem(LOCAL_STORAGE_AREAS_KEY, JSON.stringify(updatedAreas));
   console.log(JSON.parse(localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)));
 }
