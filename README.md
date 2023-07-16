@@ -1,8 +1,8 @@
 # todo-js
 
-A simple todo app using javascript html and css.
+A simple todo app based on the principles of GTD and PARA using basic js html and css.
 
-New concepts/tools to practice
+This project will use
 
 - date-fns
 - localStorage
@@ -10,9 +10,3 @@ New concepts/tools to practice
 ## Brain storming
 
 - clone the access app
-
-https://jamboard.google.com/d/1G2tgFfDWLUxZgFcFE3ugjRJKVU0ZT6eM_lwlgjtczvc/edit?usp=sharing
-
-https://www.figma.com/file/Vzl5VweGbunYiV0VEgaPub/Design-critique---Assign-Note-to-Project?type=whiteboard&node-id=0%3A1&t=relr7Lre16PhDa4E-1
-
-## todo
