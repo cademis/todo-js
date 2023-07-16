@@ -37,6 +37,7 @@ function handleProjectInput(event) {
 }
 
 function handleAddArea() {
+  //TODO #7 add contents of the input to area list
   console.log("todo - add contents of input to area list");
   const areaInput = document.getElementById("filter-area").value;
   console.log(areaInput);
@@ -59,7 +60,7 @@ function handleAreaChecked(event) {
 
 export function filterAreaList() {
   //TODO #6 make the filter strictly search for all alpha characters before the "/" e.g. searching for f/ will not also return area with fg/ e.g. fg1/
-
+  //TODO #8 resolve the issue where using the filter removes the checkbox status. the same logic may be in initial page render and below
   const checkboxes = document.getElementById("checkboxes");
   const ul = checkboxes.querySelector("ul");
   const areaInput = document.getElementById("filter-area");
