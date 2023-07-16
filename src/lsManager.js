@@ -44,45 +44,40 @@ export const getAreas = () => {
 };
 
 export function addArea(description) {
+  console.log(`description = ${description}`);
   const retrievedAreas = JSON.parse(
     localStorage.getItem(LOCAL_STORAGE_AREAS_KEY)
   );
 
-  // split the description by "/"
-  description.split("/");
-  let areaCodePrefix = description[0];
-  let slug = description[1];
-  let areaCodeSequentialNumber = 1;
+  let splitDescription = description.split("/");
+  let areaCodePrefix = splitDescription[0];
+  let slug = splitDescription[1];
 
-  // find all areas with matching prefix in retrievedAreas
-  const splitAreaCodes = retrievedAreas.map(({ areaId }) => {
-    const [areaCodePrefix, areaCodeSequentialNumber] = areaId
-      .split(/(\d+)/)
-      .filter(Boolean);
-    return { areaCodePrefix, areaCodeSequentialNumber };
-  });
+  const areaCodesWithSamePrefix = retrievedAreas
+    .map(({ areaId }) => {
+      const [retrievedAreaCodePrefix, retrievedAreaCodeSequentialNumber] =
+        areaId.split(/(\d+)/).filter(Boolean);
+      return {
+        retrievedAreaCodePrefix,
+        retrievedAreaCodeSequentialNumber: +retrievedAreaCodeSequentialNumber,
+      };
+    })
+    .filter(
+      ({ retrievedAreaCodePrefix }) =>
+        areaCodePrefix === retrievedAreaCodePrefix
+    );
 
-  let newArea;
+  let maxSequentialNumber = Math.max(
+    ...areaCodesWithSamePrefix.map(
+      ({ retrievedAreaCodeSequentialNumber }) =>
+        retrievedAreaCodeSequentialNumber
+    ),
+    0
+  );
 
-  for (const area of splitAreaCodes) {
-    if (
-      areaCodePrefix === area.areaCodePrefix &&
-      slug === areaCodeSequentialNumber
-    ) {
-      console.log(
-        `check with areaCodeSequentialNumber: ${areaCodeSequentialNumber}`
-      );
-      console.log("match found - check the next one");
-      areaCodeSequentialNumber++;
-    } else {
-      console.log(
-        "no match! - append the sequential number, add to localmemory, and refresh the page"
-      );
-      let newAreaCode = `${areaCodePrefix}${areaCodeSequentialNumber}`;
-      newArea = areaFactory(newAreaCode, slug);
-      break; // stop the loop
-    }
-  }
+  let newAreaCodeSequentialNumber = maxSequentialNumber + 1;
+  let newAreaCode = `${areaCodePrefix}${newAreaCodeSequentialNumber}`;
+  let newArea = areaFactory(newAreaCode, slug);
 
   const updatedAreas = [...retrievedAreas, newArea];
 
