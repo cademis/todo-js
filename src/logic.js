@@ -25,10 +25,11 @@ export const eventListeners = () => {
 };
 
 function handleAreaInput() {
+  //clear the list
   const checkboxes = document.getElementById("checkboxes");
   const ul = checkboxes.querySelector("ul");
-  const areaInput = document.getElementById("filter-area");
   ul.innerHTML = "";
+  //render the filteredlist
   filterAreaList();
 }
 
@@ -83,16 +84,14 @@ export function filterAreaList() {
 
   let filteredAreas = areas.filter((area) => {
     let areaId = area.areaId.toLowerCase();
-    let description = area.description.toLowerCase().split(" ").join("-");
+    let slug = area.slug;
 
     // If it's a wildcard search, check if areaId starts with searchPrefix and description includes searchSlug
     // Else, check if areaId and description exactly match searchPrefix and searchSlug respectively.
     if (isWildcardSearch) {
-      return (
-        areaId.startsWith(searchPrefix) && description.includes(searchSlug)
-      );
+      return areaId.startsWith(searchPrefix) && slug.includes(searchSlug);
     } else {
-      return areaId === searchPrefix && description === searchSlug;
+      return areaId === searchPrefix && slug === searchSlug;
     }
   });
 
