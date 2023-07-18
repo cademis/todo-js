@@ -75,6 +75,7 @@ export function filterAreaList() {
   const ul = checkboxes.querySelector("ul");
   const areaInput = document.getElementById("filter-area");
   let searchTerm = areaInput.value;
+
   const areas = getAreas();
 
   // Remove the "No matches found" message if it exists from previous searches
