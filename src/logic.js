@@ -1,4 +1,4 @@
-import { createElement, renderSidebar } from "./render";
+import { createElement } from "./render";
 import { getAreas, addArea } from "./lsManager";
 import { events as pubsub } from "./pubsub";
 
@@ -6,6 +6,12 @@ export const eventListeners = () => {
   const areaInput = document.getElementById("filter-area");
   areaInput.addEventListener("input", handleAreaInput);
   areaInput.addEventListener("click", handleAreaInput);
+  areaInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      handleAddArea();
+      event.preventDefault();
+    }
+  });
 
   const addAreaButton = document.getElementById("add-area");
   addAreaButton.addEventListener("click", handleAddArea);
