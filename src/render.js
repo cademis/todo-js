@@ -26,13 +26,26 @@ export const renderHeader = () => {
 export const renderSidebar = () => {
   const sidebarElement = createElement("div", containerElement, "sidebar");
 
-  //TODO #10 add the lines below to a separte function
+  const validationMessage = createElement("div", sidebarElement);
+  validationMessage.id = "validation-message";
+
   const input = createElement("input", sidebarElement, "filter-area");
   input.placeholder = "type '/' to search all projects";
   input.pattern = "^[A-Za-z]+/[A-Za-z\\s]+$";
   const addArea = createElement("button", sidebarElement, "add-area");
   addArea.type = "button";
   addArea.innerHTML = "Add Area";
+
+  // add an element that is visible based on an invalid a add area input
+
+  // input.addEventListener("input", function (event) {
+  //   if (input.validity.patternMismatch) {
+  //     validationMessage.innerHTML = `type "/" to see all projects
+  //     or <br> "hello/ to filter by area code prefix`;
+  //   } else {
+  //     validationMessage.textContent = "";
+  //   }
+  // });
 
   const div = createElement("div", sidebarElement, "checkboxes");
   const ul = createElement("ul", div);
