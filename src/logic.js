@@ -12,6 +12,16 @@ export const eventListeners = () => {
       event.preventDefault();
     }
   });
+  areaInput.addEventListener("input", function (event) {
+    //TODO #24 inprove the visuals of the validation message
+    if (areaInput.validity.patternMismatch) {
+      let validationMessage = document.getElementById("validation-message");
+      validationMessage.innerHTML = `Displaying all projects.<br>
+      Add prefix before '/' to refine by area code. (e.g. 'a/')`;
+    } else {
+      validationMessage.textContent = "";
+    }
+  });
 
   const addAreaButton = document.getElementById("add-area");
   addAreaButton.addEventListener("click", handleAddArea);
@@ -75,6 +85,7 @@ export function filterAreaList() {
   const ul = checkboxes.querySelector("ul");
   const areaInput = document.getElementById("filter-area");
   let searchTerm = areaInput.value;
+
   const areas = getAreas();
 
   // Remove the "No matches found" message if it exists from previous searches

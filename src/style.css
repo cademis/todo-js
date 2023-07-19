@@ -68,3 +68,9 @@ tr:hover {
   list-style: none;
   float: left;
 }
+
+/* TODO #23 make the form validation look nicer */
+
+#validation-message {
+  font-size: 0.8rem;
+}
