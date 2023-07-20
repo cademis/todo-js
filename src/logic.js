@@ -52,11 +52,18 @@ function handleAreaInput() {
 
 function handleProjectInput(event) {
   //TODO filter projects by projectInput.value
+  const areas = getAreas();
   const projects = getProjects();
   const projectInput = document.getElementById("filter-project");
   const filteredProjects = projects.filter((project) => {
-    return project.description.includes(projectInput.value);
-  }); //replace this with the filtered projects
+    let area = areas.find((a) => a.areaId.toLowerCase() === project.area);
+
+    return (
+      project.description.includes(projectInput.value) &&
+      area &&
+      area.pinned === true
+    );
+  }); //TODO also filter if the area code is pinned in the filter-area view
   renderProjectList(filteredProjects);
   // console.log("todo: handleProjectInput");
   // console.log(event);
