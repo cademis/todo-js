@@ -16,7 +16,7 @@ export const eventListeners = () => {
     //TODO #24 inprove the visuals of the validation message
     if (areaInput.validity.patternMismatch) {
       let validationMessage = document.getElementById("validation-message");
-      validationMessage.innerHTML = `Displaying all projects.<br>
+      validationMessage.textContent = `Displaying all projects.<br>
       Add prefix before '/' to refine by area code. (e.g. 'a/')`;
     } else {
       validationMessage.textContent = "";
@@ -45,7 +45,7 @@ function handleAreaInput() {
   //clear the list
   const checkboxes = document.getElementById("checkboxes");
   const ul = checkboxes.querySelector("ul");
-  ul.innerHTML = "";
+  ul.textContent = "";
   //render the filteredlist
   filterAreaList();
 }
@@ -120,7 +120,7 @@ export function filterAreaList() {
   if (filteredAreas.length === 0) {
     const messageElement = createElement("p", checkboxes);
     messageElement.id = "no-match-message";
-    messageElement.innerHTML = "No matches found"; // Assign an id for future removal
+    messageElement.textContent = "No matches found"; // Assign an id for future removal
     return; // End the function here as there's nothing else to do
   }
 
