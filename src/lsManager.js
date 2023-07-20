@@ -88,56 +88,67 @@ export function addArea(description) {
 export const getProjects = () => {
   const projects = [
     {
+      area: "h6",
       projectId: "H6-001",
       description: "this is the first project",
       created: "202307120925",
     },
     {
+      area: "h6",
       projectId: "H6-002",
       description: "this is the second project",
       created: "202307120926",
     },
     {
+      area: "p2",
       projectId: "P2-001",
       description: "this is another random project",
       created: "202307120927",
     },
     {
+      area: "h9",
       projectId: "H9-001",
       description: "this is the third project",
       created: "202307120928",
     },
     {
+      area: "p5",
       projectId: "P5-001",
       description: "this is a new project",
       created: "202307120929",
     },
     {
+      area: "h8",
       projectId: "H8-001",
       description: "this is a test project",
       created: "202307120930",
     },
     {
+      area: "p3",
       projectId: "P3-001",
       description: "this is a sample project",
       created: "202307120931",
     },
     {
+      area: "h7",
       projectId: "H7-001",
       description: "this is an experimental project",
       created: "202307120932",
     },
     {
+      area: "p4",
       projectId: "P4-001",
       description: "this is a demo project",
       created: "202307120933",
     },
     {
+      area: "h10",
       projectId: "H10-001",
       description: "this is a new addition project",
       created: "202307120934",
     },
     {
+      area: "p6",
       projectId: "P6-001",
       description: "this is a development project",
       created: "202307120935",
