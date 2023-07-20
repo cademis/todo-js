@@ -14,13 +14,13 @@ export const renderHeader = () => {
   const headerElement = createElement("header", containerElement);
   const projectView = createElement("button", headerElement);
   projectView.type = "button";
-  projectView.innerHTML = "Projects";
+  projectView.textContent = "Projects";
   const taskView = createElement("button", headerElement);
   taskView.type = "button";
-  taskView.innerHTML = "Project Actions";
+  taskView.textContent = "Project Actions";
   const noteView = createElement("button", headerElement);
   noteView.type = "button";
-  noteView.innerHTML = "Project Notes";
+  noteView.textContent = "Project Notes";
 };
 
 export const renderSidebar = () => {
@@ -34,18 +34,7 @@ export const renderSidebar = () => {
   input.pattern = "^[A-Za-z]+/[A-Za-z\\s]+$";
   const addArea = createElement("button", sidebarElement, "add-area");
   addArea.type = "button";
-  addArea.innerHTML = "Add Area";
-
-  // add an element that is visible based on an invalid a add area input
-
-  // input.addEventListener("input", function (event) {
-  //   if (input.validity.patternMismatch) {
-  //     validationMessage.innerHTML = `type "/" to see all projects
-  //     or <br> "hello/ to filter by area code prefix`;
-  //   } else {
-  //     validationMessage.textContent = "";
-  //   }
-  // });
+  addArea.textContent = "Add Area";
 
   const div = createElement("div", sidebarElement, "checkboxes");
   const ul = createElement("ul", div);
@@ -72,14 +61,14 @@ export const renderMain = () => {
   input.placeholder = "Filter Project";
   const addProject = createElement("button", mainElement);
   addProject.type = "button";
-  addProject.innerHTML = "Add Project";
+  addProject.textContent = "Add Project";
   const table = createElement("table", mainElement);
   const thead = createElement("thead", table);
   const tr = createElement("tr", thead);
   const tableHeadings = ["Project ID", "Description", "Created"];
   tableHeadings.forEach((item) => {
     const td = createElement("td", tr);
-    td.innerHTML = item;
+    td.textContent = `${item}`;
   });
   const tbody = createElement("tbody", table);
 
@@ -88,12 +77,12 @@ export const renderMain = () => {
   projects.forEach((project) => {
     const tr = createElement("tr", tbody);
     const projectId = createElement("td", tr);
-    projectId.innerHTML = project.projectId;
+    projectId.textContent = project.projectId;
     const description = createElement("td", tr);
-    // description.innerHTML = project.description;
-    description.innerHTML = `${project.projectId.toLowerCase()}/${project.description.toLowerCase()}`;
+    description.textContent = project.description;
+    description.textContent = `${project.projectId.toLowerCase()}/${project.description.toLowerCase()}`;
     const created = createElement("td", tr);
-    created.innerHTML = project.created;
+    created.textContent = project.created;
     tr.appendChild(projectId);
     tr.appendChild(description);
     tr.appendChild(created);
@@ -102,5 +91,5 @@ export const renderMain = () => {
 
 export const renderFooter = () => {
   const footerElement = createElement("footer", bodyElement);
-  footerElement.innerHTML = "Chris 2023";
+  footerElement.textContent = "Chris 2023";
 };
