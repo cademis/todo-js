@@ -1,5 +1,5 @@
-import { createElement } from "./render";
-import { getAreas, addArea } from "./lsManager";
+import { createElement, renderProjectList } from "./render";
+import { getAreas, addArea, getProjects } from "./lsManager";
 import { events as pubsub } from "./pubsub";
 
 export const eventListeners = () => {
@@ -51,8 +51,15 @@ function handleAreaInput() {
 }
 
 function handleProjectInput(event) {
-  console.log("todo: handleProjectInput");
-  console.log(event);
+  //TODO filter projects by projectInput.value
+  const projects = getProjects();
+  const projectInput = document.getElementById("filter-project");
+  const filteredProjects = projects.filter((project) => {
+    return project.description.includes(projectInput.value);
+  }); //replace this with the filtered projects
+  renderProjectList(filteredProjects);
+  // console.log("todo: handleProjectInput");
+  // console.log(event);
 }
 
 function handleAddArea() {

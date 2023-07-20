@@ -62,34 +62,29 @@ export const renderMain = () => {
   const addProject = createElement("button", mainElement);
   addProject.type = "button";
   addProject.textContent = "Add Project";
+
   const table = createElement("table", mainElement);
-  const thead = createElement("thead", table);
-  const tr = createElement("tr", thead);
-  const tableHeadings = ["Project ID", "Description", "Created"];
-  tableHeadings.forEach((item) => {
-    const td = createElement("td", tr);
-    td.textContent = `${item}`;
-  });
   const tbody = createElement("tbody", table);
-
+  const tr = createElement("tr", tbody);
   let projects = getProjects();
-
-  projects.forEach((project) => {
-    const tr = createElement("tr", tbody);
-    const projectId = createElement("td", tr);
-    projectId.textContent = project.projectId;
-    const description = createElement("td", tr);
-    description.textContent = project.description;
-    description.textContent = `${project.projectId.toLowerCase()}/${project.description.toLowerCase()}`;
-    const created = createElement("td", tr);
-    created.textContent = project.created;
-    tr.appendChild(projectId);
-    tr.appendChild(description);
-    tr.appendChild(created);
-  });
+  renderProjectList(projects);
 };
 
 export const renderFooter = () => {
   const footerElement = createElement("footer", bodyElement);
   footerElement.textContent = "Chris 2023";
+};
+
+export const renderProjectList = (projects) => {
+  const tbodyElement = document.querySelector("tbody"); // assuming you only have one tbody on your page
+  tbodyElement.innerHTML = "";
+  projects.forEach((project) => {
+    const trElement = document.createElement("tr");
+    tbodyElement.appendChild(trElement);
+    const projectId = createElement("td", trElement);
+    projectId.textContent = project.projectId;
+
+    const description = createElement("td", trElement);
+    description.textContent = project.description;
+  });
 };
